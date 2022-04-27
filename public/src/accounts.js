@@ -13,11 +13,17 @@ function getTotalNumberOfBorrows(accounts, books) {
   const holdacc = accounts.id;
   let total = 0;
 
-  books.forEach(book => {
-    const borrowsbyuser = book.borrows.filter(borrow => borrow.id === holdacc);
-    total += borrowsbyuser.length;
-  });
-  return total;
+  // const borrowsbyuser = books.borrows.filter(borrow => borrow.id === holdacc);
+  // total = borrowsbyuser.reduce((total, borrows => {
+  //    total += borrows.length;
+  // }))
+     
+
+ books.forEach(book => {
+   const borrowsbyuser = book.borrows.filter(borrow => borrow.id === holdacc);
+   total += borrowsbyuser.length;
+ });
+ return total;
 }
 
 function getBooksPossessedByAccount(account, books, authors) {

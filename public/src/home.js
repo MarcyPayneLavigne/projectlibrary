@@ -1,13 +1,9 @@
 function getTotalBooksCount(books) {
-  let bookcount = 0;
-  books.forEach(book => {bookcount += 1});
-  return bookcount;
+   return books.length
 }
 
 function getTotalAccountsCount(accounts) {
-  let accountcount = 0;
-  accounts.forEach(account => {accountcount +=1});
-  return accountcount;
+   return accounts.length;
 }
 
 function getBooksBorrowedCount(books) {
@@ -21,24 +17,40 @@ function getBooksBorrowedCount(books) {
 }
 
 function getMostCommonGenres(books) {
-  const countGenres = {};
+  let countGenres = {};
 
-  books.forEach(book => {
-    countGenres[book.genre] = (countGenres[book.genre] || 0) + 1;
-  });
+  countGenres = books.reduce((total, findGenre) => {
+      let key = total.find((item) => item.name === findGenre["genre"]) 
+      if (key) {
+        key.count += 1
+      } else {
+        let entry = {name: findGenre["genre"], count:1}
+        total.push(entry)
+      }
+      return total;
+  }, []);
+//  console.log(countGenres);
+//  return countGenres;
 
-  let sortbooks = Object.entries(countGenres).sort((a,b) => b[1]-a[1]).slice(0, 5);
+  //   books.forEach(book => {
+  //   countGenres[book.genre] = (countGenres[book.genre] || 0) + 1;
+  // });
 
-  let topobj = [];
+   let sortbooks = countGenres.sort((a,b) => b.count - a.count).slice(0, 5);
+   console.log(sortbooks);
+   return sortbooks;
 
-  sortbooks.forEach((v) => {
-    let holdobj = {}
-    holdobj["name"] =  v[0];
-    holdobj["count"] = v[1];
-    topobj.push(holdobj);
-  })
+  // let topobj = [];
 
-  return topobj;
+  // sortbooks.forEach((v) => {
+  //   let holdobj = {};
+  //   holdobj["name"] =  v[1];
+  //   holdobj["count"] = v[2];
+  //   topobj.push(holdobj);
+  // })
+
+  // console.log(topobj);
+  // return topobj;
 }
 
 function getMostPopularBooks(books) {
